@@ -1,0 +1,82 @@
+market,state,home_value,rent,tier,source
+"Detroit, MI",MI,270689,1518,major,lofty
+"Toledo, OH",OH,204000,1302,major,lofty
+"Akron, OH",OH,241000,1320,major,lofty
+"Cleveland, OH",OH,254986,1474,major,lofty
+"Birmingham, AL",AL,263437,1462,major,lofty
+"Buffalo, NY",NY,294112,1461,major,lofty
+"Little Rock, AR",AR,218000,1250,major,lofty
+"Memphis, TN",TN,246954,1435,major,lofty
+"Pittsburgh, PA",PA,234727,1523,major,lofty
+"Rochester, NY",NY,250000,1420,major,lofty
+"St. Louis, MO",MO,280017,1459,major,lofty
+"Baltimore, MD",MD,406745,1936,major,lofty
+"Cincinnati, OH",OH,312453,1583,major,lofty
+"Indianapolis, IN",IN,296207,1558,major,lofty
+"Kansas City, MO",MO,331552,1545,major,lofty
+"Louisville, KY",KY,283500,1385,major,lofty
+"Milwaukee, WI",WI,393554,1552,major,lofty
+"Oklahoma City, OK",OK,247292,1393,major,lofty
+"Tulsa, OK",OK,220000,1300,major,lofty
+"Chicago, IL",IL,359897,2275,major,lofty
+"Columbus, OH",OH,334559,1528,major,lofty
+"Huntsville, AL",AL,330000,1550,major,lofty
+"New Orleans, LA",LA,264193,1617,major,lofty
+"Philadelphia, PA",PA,394620,1928,major,lofty
+"Houston, TX",TX,307273,1648,major,lofty
+"San Antonio, TX",TX,278941,1416,major,lofty
+"Atlanta, GA",GA,381729,1854,major,lofty
+"Jacksonville, FL",FL,352624,1708,major,lofty
+"Richmond, VA",VA,399039,1772,major,lofty
+"Virginia Beach, VA",VA,376903,1878,major,lofty
+"Charlotte, NC",NC,389125,1750,major,lofty
+"Dallas-Fort Worth, TX",TX,365048,1673,major,lofty
+"Minneapolis-St. Paul, MN",MN,394234,1727,major,lofty
+"Orlando, FL",FL,385766,1972,major,lofty
+"Tampa, FL",FL,359973,2020,major,lofty
+"Las Vegas, NV",NV,427825,1748,major,lofty
+"Nashville, TN",TN,456355,1810,major,lofty
+"Phoenix, AZ",AZ,445343,1733,major,lofty
+"Raleigh, NC",NC,436249,1689,major,lofty
+"Miami, FL",FL,476638,2695,major,lofty
+"Austin, TX",TX,424110,1653,major,lofty
+"Denver, CO",CO,571808,1930,major,lofty
+"Portland, OR",OR,551911,1805,major,lofty
+"Riverside, CA",CA,584574,2539,major,lofty
+"Sacramento, CA",CA,582799,2308,major,lofty
+"Salt Lake City, UT",UT,566343,1638,major,lofty
+"Washington, DC",DC,584571,2448,major,lofty
+"Boston, MA",MA,744972,3210,major,lofty
+"Seattle, WA",WA,742220,2269,major,lofty
+"San Diego, CA",CA,940304,2991,major,lofty
+"Los Angeles, CA",CA,965867,2927,major,lofty
+"New York, NY",NY,736042,3573,major,lofty
+"San Francisco, CA",CA,1144062,3301,major,lofty
+"San Jose, CA",CA,1579943,3729,major,lofty
+"Roanoke Rapids, NC",NC,100000,990,micro,capratecity
+"Kingsville, TX",TX,150000,1420,micro,capratecity
+"Decatur, IL",IL,120000,1120,micro,capratecity
+"Danville, IL",IL,95000,850,micro,capratecity
+"Meridian, MS",MS,120000,1070,micro,capratecity
+"Orangeburg, SC",SC,150000,1320,micro,capratecity
+"Big Spring, TX",TX,140000,1210,micro,capratecity
+"Abilene, TX",TX,205000,1770,micro,capratecity
+"Vidalia, GA",GA,165000,1400,micro,capratecity
+"Ozark, AL",AL,155000,1310,micro,capratecity
+"Elmira, NY",NY,150000,1220,micro,capratecity
+"Enterprise, AL",AL,175000,1420,micro,capratecity
+"Lumberton, NC",NC,130000,1050,micro,capratecity
+"Corning, NY",NY,160000,1280,micro,capratecity
+"Enid, OK",OK,140000,1120,micro,capratecity
+"McComb, MS",MS,105000,840,micro,capratecity
+"Olean, NY",NY,155000,1240,micro,capratecity
+"Muskogee, OK",OK,155000,1220,micro,capratecity
+"Norwalk, OH",OH,185000,1450,micro,capratecity
+"Thomasville, GA",GA,220000,1720,micro,capratecity
+"Clovis, NM",NM,160000,1250,micro,capratecity
+"Ogdensburg, NY",NY,135000,1050,micro,capratecity
+"Goldsboro, NC",NC,180000,1390,micro,capratecity
+"Fort Polk South, LA",LA,160000,1230,micro,capratecity
+"Ponca City, OK",OK,110000,840,micro,capratecity
+"Pinehurst, NC (calibration)",NC,730000,2925,calibration,claude-underwriting
+"Dayton, OH (calibration)",OH,221250,1400,calibration,claude-underwriting

@@ -1,0 +1,50 @@
+name: monthly-screen
+
+# Runs the Stage-1 screen where the network actually works.
+# Zillow and Census are blocked from both the Claude cloud sandbox and the
+# desktop workspace VM, so the fetch happens here on a GitHub runner.
+on:
+  schedule:
+    - cron: '0 11 22 * *'     # 22nd, 11:00 UTC (7am ET summer, 6am ET winter)
+  workflow_dispatch:           # run it on demand from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Run national screen
+        run: |
+          mkdir -p reports
+          python -m screener.cli live \
+            --level metro --refresh --save --report reports --top 40 \
+            | tee reports/console.txt
+
+      - name: Sanity-check the run
+        run: |
+          python - <<'PY'
+          import pandas as pd
+          d = pd.read_csv("reports/latest.csv")
+          assert len(d) > 100, f"only {len(d)} markets scored - bad fetch?"
+          assert d.net_yield.notna().all(), "null yields in output"
+          print(f"OK: {len(d)} markets, {d.passes.sum()} passing gates")
+          PY
+
+      - name: Commit results
+        run: |
+          git config user.name  "market-screener[bot]"
+          git config user.email "actions@github.com"
+          git add -A reports/ data/snapshots.db || true
+          git diff --staged --quiet || git commit -m "screen: $(date -u +%Y-%m-%d)"
+          git push
