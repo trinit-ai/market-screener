@@ -6,10 +6,16 @@ name: monthly-screen
 on:
   schedule:
     - cron: '0 11 22 * *'     # 22nd, 11:00 UTC (7am ET summer, 6am ET winter)
-  workflow_dispatch:           # run it on demand from the Actions tab
+  workflow_dispatch:
 
 permissions:
   contents: write
+
+defaults:
+  run:
+    # bash -eo pipefail. Without pipefail, `python ... | tee` returns tee's exit
+    # code and a failed screen silently passes. That happened on 2026-09-22.
+    shell: bash
 
 jobs:
   screen:
@@ -24,27 +30,49 @@ jobs:
 
       - run: pip install -r requirements.txt
 
+      - name: Unit tests
+        run: pip install pytest && python -m pytest tests/ -q
+
+      - name: Clear stale outputs
+        # A previous run's reports/ must not be able to satisfy this run's checks.
+        run: rm -f reports/latest.md reports/latest.csv reports/console.txt
+
       - name: Run national screen
         run: |
           mkdir -p reports
           python -m screener.cli live \
             --level metro --refresh --save --report reports --top 40 \
-            | tee reports/console.txt
+            2>&1 | tee reports/console.txt
 
-      - name: Sanity-check the run
+      - name: Verify the run is real and fresh
         run: |
           python - <<'PY'
-          import pandas as pd
-          d = pd.read_csv("reports/latest.csv")
-          assert len(d) > 100, f"only {len(d)} markets scored - bad fetch?"
-          assert d.net_yield.notna().all(), "null yields in output"
-          print(f"OK: {len(d)} markets, {d.passes.sum()} passing gates")
+          import pandas as pd, pathlib, datetime, sys
+          md = pathlib.Path("reports/latest.md")
+          csv = pathlib.Path("reports/latest.csv")
+          if not md.exists() or not csv.exists():
+              sys.exit("FAIL: screen produced no report - the step above did not complete")
+          today = datetime.date.today().isoformat()
+          head = md.read_text().splitlines()[0]
+          if today not in head:
+              sys.exit(f"FAIL: report is stale. Header={head!r}, expected {today}")
+          d = pd.read_csv(csv)
+          if len(d) < 100:
+              sys.exit(f"FAIL: only {len(d)} markets scored - bad fetch?")
+          if d.net_yield.isna().any():
+              sys.exit("FAIL: null yields in output")
+          ms = d[d.state == "MS"]
+          if len(ms) and ms.tax_share_of_rent.median() < 0.12:
+              sys.exit(f"FAIL: MS tax share {ms.tax_share_of_rent.median():.1%} "
+                       "looks like owner-occupied rates, not investor rates")
+          print(f"OK: {len(d)} markets, {d.passes.sum()} passing gates, header {head!r}")
           PY
 
       - name: Commit results
         run: |
           git config user.name  "market-screener[bot]"
           git config user.email "actions@github.com"
-          git add -A reports/ data/snapshots.db || true
+          git add -A reports/ data/snapshots.db
           git diff --staged --quiet || git commit -m "screen: $(date -u +%Y-%m-%d)"
+          git pull --rebase --autostash
           git push

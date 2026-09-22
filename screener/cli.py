@@ -30,9 +30,7 @@ def run_live(args):
     prev = None
     rs = store.runs()
     if rs:
-        import sqlite3, pandas as _pd
-        with sqlite3.connect(store.DB) as cx:
-            prev = _pd.read_sql("SELECT * FROM snapshots WHERE run_date=?", cx, params=(rs[-1],))
+        prev = store.load(rs[-1])
     if args.save:
         print(f"saved snapshot {store.save(d)}", file=sys.stderr)
     if getattr(args, "report", None):
