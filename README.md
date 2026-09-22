@@ -15,14 +15,42 @@ Pinehurst NC by 60% on rent-to-price and landed at the same cap rate, because Oh
 property tax ate 27% of gross rent against 12% in North Carolina.
 
 Across the 81 seed markets, **median yield retention — net yield divided by gross
-yield — is 37%**. Nearly two-thirds of the headline number is burden. The markets
+yield — is 26%**. Three-quarters of the headline number is burden. The markets
 that top every "highest rent-to-price" listicle are disproportionately in states
 where tax or insurance takes it all back.
 
 Run the same $150,000 house at $1,300 rent through all 50 states and net yield
-ranges from **6.03% (HI) to 1.87% (FL)** — a 4.16-point spread driven entirely by
+ranges from **5.99% (HI) to 1.01% (FL)** — a 5-point spread driven entirely by
 state burden, with the property held identical. That spread is larger than most
 of the variation people chase between markets.
+
+## Rental rates, not owner-occupied rates
+
+The tax table uses **investor/rental effective rates**, which are materially
+higher than the owner-occupied medians most sources publish. This distinction is
+not cosmetic — it inverts rankings:
+
+| State | Owner-occupied | Rental | Multiple |
+|---|---|---|---|
+| Mississippi | 0.58% | 2.91% | 5.0x |
+| South Carolina | 0.49% | 1.77% | 3.6x |
+| West Virginia | 0.51% | 1.82% | 3.6x |
+| Alabama | 0.37% | 1.02% | 2.8x |
+| Indiana | 0.76% | 2.19% | 2.9x |
+
+The mechanisms vary: South Carolina applies a 6% assessment ratio to rentals
+against 4% for owner-occupied; Mississippi 15% against 10%; Alabama 20% against
+10% *and* denies the homestead exemption; Texas and Kentucky deny homestead
+outright; Florida caps non-homestead assessment growth at 10%/yr against 3%.
+
+An earlier version of this screener used owner-occupied medians and ranked
+Orangeburg SC first and Meridian MS third nationally. Both were artifacts. On
+corrected rates, passing markets fell from 6 to 2 and North Carolina — one of the
+few states that barely penalizes landlords, at 0.69% — became the standout.
+
+**If you extend the state table, use rental rates.** `data/state_burden.csv`
+keeps `owner_occ_rate` alongside for comparison, and a test asserts the investor
+rate is the one actually driving the model.
 
 ## Install
 
@@ -77,10 +105,12 @@ tax efficiency, eviction friction, and insurance volatility. Hard gates in
 
 ## Limitations — read these
 
-- **State tax rates are medians and hide enormous county variance.** Dayton's
-  actual effective rate is 2.04% against Ohio's 1.36% state median. The screener
-  therefore *understates* Dayton's tax problem. Always verify county rates in
-  Stage 2, and check reassessment-on-sale rules.
+- **State tax rates hide enormous county variance.** The rental rates are measured
+  in each state's largest city, which overstates burden in small metros and rural
+  counties. Dayton's actual rate is 2.04% against the 2.27% Columbus figure used
+  for Ohio. Always verify the county rate in Stage 2, and check reassessment-on-sale
+  rules — Ohio and California reassess at transfer, so a long-held property at a
+  stale assessment will step up when you buy it.
 - **Insurance is a state average**, which is badly wrong in states with high
   internal variance — coastal vs inland North Carolina, wildfire vs not in
   California, hail alley in Texas. Get a real quote before trusting any ranking.
@@ -98,7 +128,7 @@ tax efficiency, eviction friction, and insurance volatility. Hard gates in
 ## A finding you should sit with
 
 **Zero of the 81 seed markets produce a positive spread over a 7.6% investor
-mortgage.** None. Not the high-yield micropolitans, not the Midwest cash-flow
+mortgage** (and that was true before the tax correction made it worse). None. Not the high-yield micropolitans, not the Midwest cash-flow
 metros. At current rates, buying a median-priced home at market price and renting
 it out does not produce positive leverage anywhere in the seed set.
 
